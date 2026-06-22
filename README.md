@@ -4,6 +4,8 @@
 
 # Nest TESLO SHOP
 
+### This is a general ecommerce template made in Nestjs.
+
 1. Clone project
 2. Create .env file based on .env.example
     ```bash

@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImage } from "./product-image.entity";
 
 @Entity('products')
 export class Product {
@@ -20,14 +21,21 @@ export class Product {
     @Column('text', { unique: true })
     slug: string
 
-    /*  @Column('text', { array: true })
-     tags: string[] */
+    @Column('text', { array: true, default: [] })
+    tags: string[]
 
     @Column('text', { array: true })
     sizes: string[]
 
     @Column('text')
     gender: string
+
+    @OneToMany(
+        () => ProductImage,
+        productImage => productImage.product,
+        { cascade: true, eager: true }
+    )
+    images?: ProductImage[];
 
     /*   @Column('text')
       type: string */

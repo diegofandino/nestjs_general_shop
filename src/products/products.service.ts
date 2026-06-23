@@ -136,7 +136,7 @@ export class ProductsService {
   }
 
 
-  private handleDBExceptions(error: any) {
+  private handleDBExceptions(error: any): never {
     if (error.code === '23505') {
       throw new InternalServerErrorException(error.detail);
     }

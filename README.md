@@ -20,7 +20,12 @@
     ```bash
     yarn install
     ```
-5. Run yarn run start:dev
+5. Run seed
+    ```bash
+    http://localhost:3000/api/seed
+    ```
+
+6. Run yarn run start:dev
     ```bash
     yarn run start:dev
     ```

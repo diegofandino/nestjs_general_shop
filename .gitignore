@@ -4,6 +4,7 @@
 /build
 /postgres
 /teslo_shop
+/src/seed/data
 .env
 
 # Logs

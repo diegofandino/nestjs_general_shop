@@ -2,8 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
+import { FilesModule } from './files/files.module';
 import { ProductsModule } from './products/products.module';
 import { SeedModule } from './seed/seed.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { SeedModule } from './seed/seed.module';
     CommonModule,
     ProductsModule,
     SeedModule,
+    FilesModule,
+    UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule { }

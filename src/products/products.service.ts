@@ -8,6 +8,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductImage } from './entities/product-image.entity';
 import { Product } from './entities/product.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -23,12 +24,13 @@ export class ProductsService {
     private readonly dataSource: DataSource,
   ) { }
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto, user: User) {
     const { images = [], ...productDetails } = createProductDto;
 
     try {
       const product = this.productRepository.create({
         ...productDetails,
+        user,
         images: images.map(image => this.productImageRepository.create({ url: image }))
       });
       return await this.productRepository.save(product);
@@ -82,7 +84,7 @@ export class ProductsService {
     return product;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto, user: User) {
 
     const { images, ...productDetails } = updateProductDto;
 
@@ -106,6 +108,7 @@ export class ProductsService {
       product.images = await this.productImageRepository.find({ where: { product: { id } } });
     }
 
+    product.user = user;
     await queryRunner.manager.save(product);
 
     try {

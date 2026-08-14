@@ -11,4 +11,6 @@ export const TranslationsKeys = {
     CANNOT_LOGIN_USER: 'Cannot login user, check data',
     CANNONT_CREATE_USER: 'Cannot create user, check data',
     TOKEN_FLOW_ERROR: 'Something went wrong, please talk to administrator.',
+    CANNOT_DELETE_USERS: 'Cannot delete users, check data',
+    CANNOT_ADD_DUMMY_USERS: 'Cannot add dummy users, check data',
 }

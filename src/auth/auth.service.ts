@@ -8,6 +8,7 @@ import { LoginUserDTO } from './dto/login-user.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { SeedData } from 'src/seed/data/seed-data';
 
 @Injectable()
 export class AuthService {
@@ -91,5 +92,42 @@ export class AuthService {
   private getJwtToken = (payload: JwtPayload) => {
     const token = this.jwtService.sign(payload);
     return token;
+  }
+
+  async removeUsers() {
+    try {
+      return await this.authRepository.createQueryBuilder('user').delete().where({}).execute();
+    } catch (error) {
+      throw new InternalServerErrorException(TranslationsKeys.CANNOT_DELETE_USERS);
+    }
+  }
+
+  async addDummyUsers(initialData: SeedData) {
+    try {
+      const users = initialData.users;
+      const userPromises: User[] = [];
+      users.forEach(user => {
+        userPromises.push(
+          this.authRepository.create({
+            ...user,
+            password: bcrypt.hashSync(user.password, 10)
+          })
+        );
+      });
+
+      const dbUsers = await this.authRepository.save(userPromises);
+
+      return dbUsers[0];
+    } catch (error) {
+      throw new InternalServerErrorException(TranslationsKeys.CANNOT_ADD_DUMMY_USERS);
+    }
+  }
+
+  async checkAuthStatus(user: User) {
+
+    return {
+      ...user,
+      token: this.getJwtToken({ id: user.id })
+    }
   }
 }

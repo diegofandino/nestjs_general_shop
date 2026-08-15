@@ -8,7 +8,9 @@ import { FilesService } from './files.service';
 import type { Response } from 'express';
 import { fileFilter } from './helpers/file-filter.helper';
 import { fileNamer } from './helpers/file-namer.helper';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('files')
 @Controller('files')
 export class FilesController {
   constructor(

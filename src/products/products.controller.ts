@@ -9,13 +9,26 @@ import { Auth } from 'src/auth/decorator/auth.decorator';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
 import { User } from 'src/auth/entities/user.entity';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Product } from './entities/product.entity';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   @Auth(ValidRoles.ADMIN)
+  @ApiResponse({
+    status: 201,
+    description: 'Product was created',
+    type: Product
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid product data'
+  })
+
   create(
     @Body() createProductDto: CreateProductDto,
     @GetUser() user: User

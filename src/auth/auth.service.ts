@@ -130,4 +130,10 @@ export class AuthService {
       token: this.getJwtToken({ id: user.id })
     }
   }
+
+  async searchUserById(id: string): Promise<User | null> {
+    return await this.authRepository.findOne({
+      where: { id }
+    })
+  }
 }
